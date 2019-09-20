@@ -4,16 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        app:srcCompat="@mipmap/default_user" />
-
     <TextView
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
@@ -22,7 +12,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/profile_image"
         android:text="Username"
         android:textColor="#555555"
         android:textSize="16sp" />
@@ -35,20 +24,18 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/profile_image"
         android:text="Title"
         android:textColor="#555555"
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/status_text"
+        android:id="@+id/message_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_text"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/profile_image"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
         android:textColor="#999999"
         android:textSize="12sp" />

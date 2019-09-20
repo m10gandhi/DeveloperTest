@@ -1,12 +1,16 @@
 package com.example.developertest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,106 +19,106 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText mSearchField;
     private ImageButton mSearchBtn;
+    public String name, image, title, message;
 
     private RecyclerView mResultList;
 
     private DatabaseReference mUserDatabase;
+    private static final String TAG = "Something";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance( );
+    private CollectionReference emailsRef = db.collection("emails");
+    private Object EmailsHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference("emails");
+        RecyclerView recyclerView = findViewById(R.id.result_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        CollectionReference query = db.collection("emails");
 
-        mSearchField = (EditText) findViewById(R.id.search_field);
-        mSearchBtn = (ImageButton) findViewById(R.id.search_btn);
+        FirestoreRecyclerOptions <MainActivity> response = new FirestoreRecyclerOptions.Builder <MainActivity>( )
+                .setQuery(query, MainActivity.class)
+                .build( );
 
-        mResultList = (RecyclerView) findViewById(R.id.result_list);
-        mResultList.setHasFixedSize(true);
-        mResultList.setLayoutManager(new LinearLayoutManager(this));
-
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+        FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter <MainActivity, EmailsHolder>(response) {
             @Override
-            public void onClick(View view) {
-
-                String searchText = mSearchField.getText().toString();
-
-                firebaseUserSearch(searchText);
-
-            }
-        });
-
-    }
-
-    private void firebaseUserSearch(String searchText) {
-
-        Toast.makeText(MainActivity.this, "Started Search", Toast.LENGTH_LONG).show();
-
-        Query firebaseSearchQuery = mUserDatabase.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
-
-        FirebaseRecyclerAdapter <Users, UsersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(
-
-                Users.class,
-                R.layout.list_layout,
-                UsersViewHolder.class,
-                firebaseSearchQuery
-
-        ) {
-            @Override
-            protected void populateViewHolder(UsersViewHolder viewHolder, Users model, int position) {
-
-
-                viewHolder.setDetails(getApplicationContext(), model.getName(), model.getStatus(), model.getImage());
-
+            public void onBindViewHolder(EmailsHolder holder, int position, MainActivity model) {
+                holder.name_text.setText(model.getName( ));
+                holder.title_text.setText(model.getTitle( ));
+                holder.message_text.setText(model.getMessage( ));
+                holder.onCreateViewHolder().setOnClickListener(v -> {
+                    Snackbar.make((View) EmailsHolder, model.getName( ) + ", " + model.getTitle( ) + " at " + model.getMessage( ), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show( );
+                });
             }
         };
 
-        mResultList.setAdapter(firebaseRecyclerAdapter);
-
-    }
-
-
-    // View Holder Class
-
-    public static class UsersViewHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-
-        public UsersViewHolder(View itemView) {
-            super(itemView);
-
-            mView = itemView;
 
         }
 
-        public void setDetails(Context ctx, String userName, String userStatus, String userImage){
-
-            TextView user_name = (TextView) mView.findViewById(R.id.name_text);
-            TextView user_status = (TextView) mView.findViewById(R.id.status_text);
-            ImageView user_image = (ImageView) mView.findViewById(R.id.profile_image);
-
-
-            user_name.setText(userName);
-            user_status.setText(userStatus);
-
-            Glide.with(ctx).load(userImage).into(user_image);
-
-
-        }
-
-
-
-
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String status) {
+        this.title = title;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public MainActivity(String name, String image, String title, String message) {
+        this.name = name;
+        this.image = image;
+        this.title = title;
+        this.message = message;
+    }
 }
