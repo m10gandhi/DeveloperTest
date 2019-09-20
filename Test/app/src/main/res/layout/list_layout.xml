@@ -28,6 +28,19 @@
         android:textSize="16sp" />
 
     <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/profile_image"
+        android:text="Title"
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <TextView
         android:id="@+id/status_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,5 +51,5 @@
         android:layout_toEndOf="@+id/profile_image"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
         android:textColor="#999999"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 </RelativeLayout>
