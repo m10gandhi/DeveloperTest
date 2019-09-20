@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "319445099596",
+    "firebase_url": "https://developertest-restapi.firebaseio.com",
+    "project_id": "developertest-restapi",
+    "storage_bucket": "developertest-restapi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319445099596:android:a729b7594a2f264d7e80e9",
+        "android_client_info": {
+          "package_name": "com.example.developertest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319445099596-5u58skqk8h3egso3ru0ctqc12s4k8r7n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.developertest",
+            "certificate_hash": "d90919a20cc7300f3a3006a8dda527964f508f23"
+          }
+        },
+        {
+          "client_id": "319445099596-3lu3ckqf6k6joa37b0c4ib0mf3c4p9tr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKqhWlhqx4hQDE9HdQoVtoGseiJubkrLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319445099596-3lu3ckqf6k6joa37b0c4ib0mf3c4p9tr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
